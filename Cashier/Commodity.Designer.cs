@@ -87,7 +87,7 @@
             this.textBox3.Location = new System.Drawing.Point(264, 90);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(222, 21);
-            this.textBox3.TabIndex = 1;
+            this.textBox3.TabIndex = 3;
             this.textBox3.Visible = false;
             // 
             // textBox2
@@ -95,7 +95,7 @@
             this.textBox2.Location = new System.Drawing.Point(264, 56);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(222, 21);
-            this.textBox2.TabIndex = 1;
+            this.textBox2.TabIndex = 2;
             // 
             // textBox1
             // 
@@ -154,9 +154,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Enabled = false;
             this.dataGridView1.Location = new System.Drawing.Point(6, 20);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(656, 312);
             this.dataGridView1.TabIndex = 0;
@@ -169,6 +169,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Commodity";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Commodity";
             this.Load += new System.EventHandler(this.Commodity_Load);
             this.groupBox1.ResumeLayout(false);

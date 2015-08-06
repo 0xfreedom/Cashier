@@ -9,3 +9,4 @@ E:\Projects\Cashier\Cashier\obj\Debug\Cashier.exe
 E:\Projects\Cashier\Cashier\obj\Debug\Cashier.pdb
 E:\Projects\Cashier\Cashier\bin\Debug\db.mdb
 E:\Projects\Cashier\Cashier\obj\Debug\Cashier.Commodity.resources
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.RegisterBusiness.resources

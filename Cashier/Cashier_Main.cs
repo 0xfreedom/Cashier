@@ -29,5 +29,37 @@ namespace Cashier
             commodity_From.Close();
             commodity_From.Dispose();
         }
+
+        private void 登记商家ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegisterBusiness registerBusiness = new RegisterBusiness();
+            registerBusiness.ShowDialog();
+            registerBusiness.Close();
+            registerBusiness.Dispose();
+        }
+
+        private void 消费结算ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Pay payFrom = new Pay();
+            payFrom.ShowDialog();
+            payFrom.Close();
+            payFrom.Dispose();
+        }
+
+        private void 账务统计ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bill billFrom = new Bill();
+            billFrom.ShowDialog();
+            billFrom.Close();
+            billFrom.Dispose();
+        }
+
+        private void 统计ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Statistics statisticsFrom = new Statistics();
+            statisticsFrom.ShowDialog();
+            statisticsFrom.Close();
+            statisticsFrom.Dispose();
+        }
     }
 }

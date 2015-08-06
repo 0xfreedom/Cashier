@@ -64,11 +64,13 @@ namespace Cashier
             string comID = textBox1.Text.Trim();
             string comName = textBox2.Text.Trim();
             string comSeller = getBusinessName(comboBox1.SelectedValue.ToString());
-            sSql = "insert into goods (uid,Business_ID,商品编号,商品名称,商家名称) values ('" + Guid.NewGuid().ToString() + "','" + comSeller + "','" + comID + "','" + comName + "','" + comSeller + "')";
+            sSql = "insert into goods (uid,Business_ID,商品编号,商品名称,商家名称) values ('" + Guid.NewGuid().ToString() + "','" + comboBox1.SelectedValue.ToString() + "','" + comID + "','" + comName + "','" + comSeller + "')";
             int resNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
             if (resNum > 0)
             {
-                MessageBox.Show("保存成功");
+                textBox1.Text = "";
+                textBox2.Text = "";
+                //MessageBox.Show("保存成功");
             }
             //调用绑定GridView
             BinderGridView();
