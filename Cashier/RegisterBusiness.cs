@@ -37,6 +37,7 @@ namespace Cashier
             if (resNum > 0)
             {
                 textBox1.Text = "";
+                textBox1.Focus();
                 //Messagebox.show("保存成功");
             }
             BinderGridView();

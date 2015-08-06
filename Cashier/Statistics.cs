@@ -20,6 +20,7 @@ namespace Cashier
 
         private void Statistics_Load(object sender, EventArgs e)
         {
+            comboBox2.SelectedIndex = 0;
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, "select * from Business", null);
             comboBox1.DataSource = dt;
             comboBox1.DisplayMember = "商家名称";
