@@ -33,12 +33,14 @@
             this.消费结算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.账务统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.登记商家ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.登记商家ToolStripMenuItem,
             this.商品录入ToolStripMenuItem,
             this.消费结算ToolStripMenuItem,
             this.账务统计ToolStripMenuItem,
@@ -74,6 +76,12 @@
             this.统计ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.统计ToolStripMenuItem.Text = "统计";
             // 
+            // 登记商家ToolStripMenuItem
+            // 
+            this.登记商家ToolStripMenuItem.Name = "登记商家ToolStripMenuItem";
+            this.登记商家ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.登记商家ToolStripMenuItem.Text = "登记商家";
+            // 
             // Cashier_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -98,6 +106,7 @@
         private System.Windows.Forms.ToolStripMenuItem 账务统计ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 统计ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 商品录入ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 登记商家ToolStripMenuItem;
     }
 }
 
