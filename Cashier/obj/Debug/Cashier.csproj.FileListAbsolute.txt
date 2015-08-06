@@ -1,0 +1,11 @@
+E:\Projects\Cashier\Cashier\bin\Debug\Cashier.exe.config
+E:\Projects\Cashier\Cashier\bin\Debug\Cashier.exe
+E:\Projects\Cashier\Cashier\bin\Debug\Cashier.pdb
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.csprojResolveAssemblyReference.cache
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.Cashier_Main.resources
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.Properties.Resources.resources
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.csproj.GenerateResource.Cache
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.exe
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.pdb
+E:\Projects\Cashier\Cashier\bin\Debug\db.mdb
+E:\Projects\Cashier\Cashier\obj\Debug\Cashier.Commodity.resources
