@@ -29,5 +29,10 @@ namespace Cashier
             commodity_From.Close();
             commodity_From.Dispose();
         }
+
+        private void 统计ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

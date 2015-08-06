@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.登记商家ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.商品录入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.消费结算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.账务统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.登记商家ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,6 +50,12 @@
             this.menuStrip1.Size = new System.Drawing.Size(784, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 登记商家ToolStripMenuItem
+            // 
+            this.登记商家ToolStripMenuItem.Name = "登记商家ToolStripMenuItem";
+            this.登记商家ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.登记商家ToolStripMenuItem.Text = "登记商家";
             // 
             // 商品录入ToolStripMenuItem
             // 
@@ -75,12 +81,7 @@
             this.统计ToolStripMenuItem.Name = "统计ToolStripMenuItem";
             this.统计ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.统计ToolStripMenuItem.Text = "统计";
-            // 
-            // 登记商家ToolStripMenuItem
-            // 
-            this.登记商家ToolStripMenuItem.Name = "登记商家ToolStripMenuItem";
-            this.登记商家ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.登记商家ToolStripMenuItem.Text = "登记商家";
+            this.统计ToolStripMenuItem.Click += new System.EventHandler(this.统计ToolStripMenuItem_Click);
             // 
             // Cashier_Main
             // 
