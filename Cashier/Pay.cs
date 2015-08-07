@@ -249,9 +249,8 @@ namespace Cashier
         {
             TotalID = Guid.NewGuid().ToString();
             //先向Total合计表里插入此次账单 
-            //MessageBox.Show(DateTime.Now.ToShortDateString());
-            sSql = "insert into Total (UID,总金额,createDate) values ('" + TotalID + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now.ToShortDateString() + "')";
-           AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+            sSql = "insert into Total (UID,总金额,createDate) values ('" + TotalID + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now + "')";
+            AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
 
 
             using (OleDbConnection con = new OleDbConnection(AccessHelper.conn))

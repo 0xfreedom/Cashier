@@ -30,7 +30,7 @@ namespace Cashier
 
             }
 
-            sSql = "select UID,总金额,createDate as 记录日期 from Total";
+            sSql = "select * from Total";
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -42,15 +42,7 @@ namespace Cashier
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //获得所点击的行的UID
-            try
-            {
-                viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
-            }
-            catch (Exception)
-            {
-                 
-            }
-            
+            viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
             //MessageBox.Show(viewState);
             sSql = "select 商品编号,商品名称,商品单价,商品数量,金额 from Bill where Total_ID='" + viewState + "'";
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
@@ -61,7 +53,5 @@ namespace Cashier
             dataGridView2.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView2.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
-
-        
     }
 }
