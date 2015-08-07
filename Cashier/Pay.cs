@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,8 +24,7 @@ namespace Cashier
         }
         private void Pay_Load(object sender, EventArgs e)
         {
-            TotalID = Guid.NewGuid().ToString();
-            BinderGridView();
+            //BinderGridView();
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -32,9 +32,15 @@ namespace Cashier
         }
         private void BinderGridView()
         {
-            sSql = "select * from Goods where 商品编号 like '%" + textBox1.Text.Trim() + "%'";
+            if (checkBox3.Checked == true)
+            {
+                sSql = "select * from Goods where 商品编号 like '%" + textBox1.Text.Trim() + "%'";
+            }
+            else
+            {
+                sSql = "select * from Goods where 商品编号 like '" + textBox1.Text.Trim() + "%'";
+            }
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
-
             dataGridView1.DataSource = dt;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
@@ -47,6 +53,7 @@ namespace Cashier
             }
             catch (Exception)
             {
+
             }
 
 
@@ -58,12 +65,18 @@ namespace Cashier
         {
             try
             {
+                textBox1.Text = "";
+                textBox1.Focus();
                 viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
-                //sSql = "select UID,商品编号,商品名称 from goods where uid='" + viewState + "'";
-                //DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
+                sSql = "select UID,商品编号,商品名称 from goods where uid='" + viewState + "'";
+                DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
                 //dataGridView2.DataSource = dt;
-
-
+                int index = this.dataGridView2.Rows.Add();
+                //MessageBox.Show(dt.Rows[0]["商品编号"].ToString());
+                this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["UID"].ToString();
+                this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["商品编号"].ToString();
+                this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["商品名称"].ToString();
+                //this.dataGridView2.Rows[index].Cells["商品名称"].Value = dt.Rows[0]["商品名称"].ToString();
 
             }
             catch (Exception)
@@ -231,18 +244,98 @@ namespace Cashier
             textBox3.Focus();
             textBox3.SelectAll();
         }
+
         private void UpDate()
         {
-            //先向Total合计表里插入此次账单
-
+            TotalID = Guid.NewGuid().ToString();
+            //先向Total合计表里插入此次账单 
             sSql = "insert into Total (UID,总金额,createDate) values ('" + TotalID + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now + "')";
             AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+
+
+            using (OleDbConnection con = new OleDbConnection(AccessHelper.conn))
+            {
+                con.Open();
+                using (OleDbTransaction tran = con.BeginTransaction())
+                {
+                    try
+                    {
+                        for (int i = 0; i < dataGridView2.Rows.Count - 1; i++)
+                        {
+                            DataGridViewRow row = dataGridView2.Rows[i];
+                            string goodsId = row.Cells[0].Value.ToString();
+                            string comID = row.Cells[1].Value.ToString();
+                            string comName = row.Cells[2].Value.ToString();
+                            string comPrice = row.Cells[3].Value.ToString();
+                            string comNum = row.Cells[4].Value.ToString();
+                            string result = row.Cells[5].Value.ToString();
+                            sSql = "insert into Bill (UID,goodsID,商品编号,商品名称,商品单价,现金结算,刷卡结算,商品数量,金额,Total_ID) values ('" + Guid.NewGuid().ToString() + "','" + goodsId + "','" + comID + "','" + comName + "','" + comPrice + "','" + textBox2.Text.Trim() + "','" + textBox3.Text.Trim() + "','" + comNum + "','" + result + "','" + TotalID + "')";
+                            AccessHelper.ExecuteNonQuery(tran, sSql, null);
+                        }
+                        tran.Commit();
+                        MessageBox.Show("保存成功！", "恭喜！", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //关闭窗口释放资源
+                        this.Close();
+                        this.Dispose();
+                        Pay payFrom = new Pay();
+                        payFrom.ShowDialog();
+                    }
+                    catch (Exception)
+                    {
+                        tran.Rollback();
+                        MessageBox.Show("插入失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             UpDate();
         }
+
+        private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                decimal price = 0;
+                bool isprice = Decimal.TryParse(this.dataGridView2.CurrentRow.Cells[3].EditedFormattedValue.ToString(), out price);
+                int num = 0;
+                bool isnum = Int32.TryParse(this.dataGridView2.CurrentRow.Cells[4].EditedFormattedValue.ToString(), out num);
+                decimal sum = price * num;
+                this.dataGridView2.CurrentRow.Cells[5].Value = sum.ToString();
+
+            }
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            decimal totalPrice = 0;
+
+            for (int i = 0; i < dataGridView2.Rows.Count - 1; i++)
+            {
+                DataGridViewRow row = dataGridView2.Rows[i];
+                try
+                {
+                    totalPrice += Convert.ToDecimal(row.Cells[5].Value.ToString());
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+
+            }
+            label3.Text = totalPrice.ToString();
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox1.Focus();
+        }
+
+
 
     }
 }

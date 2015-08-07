@@ -24,10 +24,18 @@ namespace Cashier
 
         private void 商品录入ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Commodity commodity_From = new Commodity();
-            commodity_From.ShowDialog();
-            commodity_From.Close();
-            commodity_From.Dispose();
+            if (AccessHelper.ExecuteDataTable(AccessHelper.conn, "select * from Business", null).Rows.Count != 0)
+            {
+                Commodity commodity_From = new Commodity();
+                commodity_From.ShowDialog();
+                commodity_From.Close();
+                commodity_From.Dispose();
+            }
+            else
+            {
+                MessageBox.Show("先登记商家！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void 登记商家ToolStripMenuItem_Click(object sender, EventArgs e)

@@ -22,10 +22,19 @@ namespace Cashier
         private void Commodity_Load(object sender, EventArgs e)
         {
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, "select * from Business", null);
+            //if (dt.Rows.Count != 0)
+            //{
             comboBox1.DataSource = dt;
             comboBox1.DisplayMember = "商家名称";
             comboBox1.ValueMember = "UID";
             BinderGridView();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("先添加商家！");
+            //    return;
+            //}
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -39,13 +48,16 @@ namespace Cashier
             }
             else
             {
-                sSql = "select * from goods where 商品编号='" + textBox1.Text.Trim() + "'";
-                using (OleDbDataReader oddr = AccessHelper.ExecuteReader(AccessHelper.conn, sSql, null))
+                if (checkBox1.Checked == false)
                 {
-                    if (oddr.Read())
+                    sSql = "select * from goods where 商品编号='" + textBox1.Text.Trim() + "'";
+                    using (OleDbDataReader oddr = AccessHelper.ExecuteReader(AccessHelper.conn, sSql, null))
                     {
-                        MessageBox.Show("商品编号重复！");
-                        return;
+                        if (oddr.Read())
+                        {
+                            MessageBox.Show("商品编号重复！");
+                            return;
+                        }
                     }
                 }
 
