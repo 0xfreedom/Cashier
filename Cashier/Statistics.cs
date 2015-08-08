@@ -64,11 +64,11 @@ namespace Cashier
             //MessageBox.Show(comboBox2.SelectedIndex.ToString());
             if (comboBox2.SelectedIndex == 0)
             {
-                sSql = "select 现金结算,Total_ID from Bill";
+                sSql = "select Total_ID,现金结算 from Bill";
             }
             else if (comboBox2.SelectedIndex == 1)
             {
-                sSql = "select 刷卡结算,Total_ID from Bill";
+                sSql = "select Total_ID,刷卡结算 from Bill";
             }
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
