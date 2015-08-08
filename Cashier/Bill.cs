@@ -21,6 +21,8 @@ namespace Cashier
 
         private void Bill_Load(object sender, EventArgs e)
         {
+            sSql = "select COUNT(*) from Total";
+            label1.Text = "共：" + AccessHelper.ExecuteScalar(AccessHelper.conn, sSql, null).ToString() + " 笔";
             try
             {
                 viewState = this.dataGridView1[0, 0].Value.ToString();
@@ -36,6 +38,7 @@ namespace Cashier
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+             
 
         }
 
@@ -48,9 +51,9 @@ namespace Cashier
             }
             catch (Exception)
             {
-                 
+
             }
-            
+
             //MessageBox.Show(viewState);
             sSql = "select 商品编号,商品名称,商品单价,商品数量,金额 from Bill where Total_ID='" + viewState + "'";
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
@@ -62,6 +65,17 @@ namespace Cashier
             dataGridView2.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
-        
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            sSql = "select UID,总金额,createDate as 记录日期 from Total where UID like '%" + textBox1.Text.Trim()+ "%'";
+            DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
+            dataGridView1.DataSource = dt;
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            
+        }
+
+
     }
 }

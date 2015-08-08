@@ -27,30 +27,56 @@ namespace Cashier
             comboBox1.ValueMember = "UID";
 
         }
-
+        /// <summary>
+        /// 按照商家查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Enabled = true;
+            timer2.Enabled = false;
             //comboBox1.SelectedValue.ToString();
-            sSql = "select * from Bill where goodsID in (select UID from goods where Business_ID='" + comboBox1.SelectedValue.ToString() + "')";
+            sSql = "select 商品编号,商品名称,SUM(商品数量) as 商品数量,SUM(金额) as 金额 from Bill where goodsID in (select UID from Goods where Business_ID='" + comboBox1.SelectedValue.ToString() + "') group by 商品编号,商品名称 order by 商品编号";
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[9].Visible = false;
+            //dataGridView1.Columns[0].Visible = false;
+            //dataGridView1.Columns[4].Visible = false;
+            //dataGridView1.Columns[5].Visible = false;
+            //dataGridView1.Columns[6].Visible = false;
+            //dataGridView1.Columns[1].Visible = false;
+            //dataGridView1.Columns[9].Visible = false;
             for (int i = 0; i < dt.Columns.Count; i++)
             {
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
 
         }
-
+        /// <summary>
+        /// 按照支付方式查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(comboBox2.SelectedItem.ToString());
-            sSql = "select * from Bill where 支付方式='" + comboBox2.SelectedItem.ToString() + "'";
+            timer1.Enabled = false;
+            timer2.Enabled = true;
+            //MessageBox.Show(comboBox2.SelectedIndex.ToString());
+            if (comboBox2.SelectedIndex == 0)
+            {
+                sSql = "select 现金结算,Total_ID from Bill";
+            }
+            else if (comboBox2.SelectedIndex == 1)
+            {
+                sSql = "select 刷卡结算,Total_ID from Bill";
+            }
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -62,22 +88,42 @@ namespace Cashier
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            decimal cardPrice = 0;
-            decimal moneyPrice = 0;
+            decimal Price = 0;
+
             for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
             {
                 DataGridViewRow row = dataGridView1.Rows[i];
                 try
                 {
-                    cardPrice += Convert.ToDecimal(row.Cells[6].Value.ToString());
-                    moneyPrice += Convert.ToDecimal(row.Cells[5].Value.ToString());
+                    Price += Convert.ToDecimal(row.Cells[3].Value.ToString());
+
                 }
                 catch (Exception)
                 {
                     return;
                 }
-                label2.Text = cardPrice.ToString();
-                label6.Text = moneyPrice.ToString();
+                label8.Text = Price.ToString();
+
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            decimal Price = 0;
+
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+                DataGridViewRow row = dataGridView1.Rows[i];
+                try
+                {
+                    Price += Convert.ToDecimal(row.Cells[0].Value.ToString());
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                label8.Text = Price.ToString();
+
             }
         }
     }
