@@ -116,7 +116,7 @@ namespace Cashier
                 DataGridViewRow row = dataGridView1.Rows[i];
                 try
                 {
-                    Price += Convert.ToDecimal(row.Cells[1].Value.ToString());
+                    Price += Convert.ToDecimal(row.Cells[0].Value.ToString());
                 }
                 catch (Exception)
                 {
