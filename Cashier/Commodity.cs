@@ -86,6 +86,7 @@ namespace Cashier
             }
             //调用绑定GridView
             BinderGridView();
+            textBox1.Focus();
 
         }
 

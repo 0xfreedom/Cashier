@@ -28,10 +28,12 @@ namespace Cashier
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            BinderGridView();
+            dataGridView1.DataSource = null;
+            //BinderGridView(); 
         }
         private void BinderGridView()
         {
+            dataGridView1.DataSource = null;
             if (checkBox3.Checked == true)
             {
                 sSql = "select * from Goods where 商品编号 like '%" + textBox1.Text.Trim() + "%'";
@@ -47,14 +49,15 @@ namespace Cashier
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            try
-            {
-                viewState = this.dataGridView1[0, 0].Value.ToString();
-            }
-            catch (Exception)
-            {
 
-            }
+            //try
+            //{
+            //    viewState = this.dataGridView1[0, 0].Value.ToString();
+            //}
+            //catch (Exception)
+            //{
+            //    return;
+            //}
 
 
         }
@@ -63,26 +66,29 @@ namespace Cashier
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+
+            textBox1.Text = "";
+            textBox1.Focus();
             try
             {
-                textBox1.Text = "";
-                textBox1.Focus();
-                viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
-                sSql = "select UID,商品编号,商品名称 from goods where uid='" + viewState + "'";
-                DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
-                //dataGridView2.DataSource = dt;
-                int index = this.dataGridView2.Rows.Add();
-                //MessageBox.Show(dt.Rows[0]["商品编号"].ToString());
-                this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["UID"].ToString();
-                this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["商品编号"].ToString();
-                this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["商品名称"].ToString();
-                //this.dataGridView2.Rows[index].Cells["商品名称"].Value = dt.Rows[0]["商品名称"].ToString();
-
+                string a = viewState = this.dataGridView1[0, 0].Value.ToString();
+                MessageBox.Show(a);
+                // viewState = this.dataGridView1.Rows[dataGridView1.CurrentRow.Index]
             }
             catch (Exception)
             {
-
+                throw;
             }
+
+            //sSql = "select UID,商品编号,商品名称 from goods where uid='" + viewState + "'";
+            //DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
+            ////dataGridView2.DataSource = dt;
+            //int index = this.dataGridView2.Rows.Add();
+            ////MessageBox.Show(dt.Rows[0]["商品编号"].ToString());
+            //this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["UID"].ToString();
+            //this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["商品编号"].ToString();
+            //this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["商品名称"].ToString();
+            ////this.dataGridView2.Rows[index].Cells["商品名称"].Value = dt.Rows[0]["商品名称"].ToString();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -334,6 +340,18 @@ namespace Cashier
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             textBox1.Focus();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sSql = "select * from Goods where 商品编号 like '" + textBox1.Text.Trim() + "%'";
+            DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
+            dataGridView1.DataSource = dt;
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
 
