@@ -13,8 +13,6 @@ namespace Cashier
 {
     public partial class Pay : Form
     {
-
-
         private string sSql = "";
         private string viewState = "";
         private decimal moneyPay = 0;
@@ -26,7 +24,6 @@ namespace Cashier
         }
         private void Pay_Load(object sender, EventArgs e)
         {
-            checkBox3.Checked = Cashier_Main.itis;
             //BinderGridView();
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -38,12 +35,10 @@ namespace Cashier
             if (checkBox3.Checked == true)
             {
                 sSql = "select * from Goods where 商品编号 like '%" + textBox1.Text.Trim() + "%'";
-                Cashier_Main.itis = checkBox3.Checked;
             }
             else
             {
                 sSql = "select * from Goods where 商品编号 like '" + textBox1.Text.Trim() + "%'";
-                Cashier_Main.itis = checkBox3.Checked;
             }
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
@@ -255,7 +250,7 @@ namespace Cashier
             TotalID = Guid.NewGuid().ToString();
             //先向Total合计表里插入此次账单 
             //MessageBox.Show(DateTime.Now.ToShortDateString());
-            sSql = "insert into Total (UID,现金结算,刷卡结算,总金额,createDate) values ('" + TotalID + "','" + textBox2.Text.Trim() + "','" + textBox3.Text.Trim() + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now.ToShortDateString() + "')";
+            sSql = "insert into Total (UID,总金额,createDate) values ('" + TotalID + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now.ToShortDateString() + "')";
             AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
 
 
@@ -275,7 +270,7 @@ namespace Cashier
                             string comPrice = row.Cells[3].Value.ToString();
                             string comNum = row.Cells[4].Value.ToString();
                             string result = row.Cells[5].Value.ToString();
-                            sSql = "insert into Bill (UID,goodsID,商品编号,商品名称,商品单价,商品数量,金额,Total_ID) values ('" + Guid.NewGuid().ToString() + "','" + goodsId + "','" + comID + "','" + comName + "','" + comPrice + "','" + comNum + "','" + result + "','" + TotalID + "')";
+                            sSql = "insert into Bill (UID,goodsID,商品编号,商品名称,商品单价,现金结算,刷卡结算,商品数量,金额,Total_ID) values ('" + Guid.NewGuid().ToString() + "','" + goodsId + "','" + comID + "','" + comName + "','" + comPrice + "','" + textBox2.Text.Trim() + "','" + textBox3.Text.Trim() + "','" + comNum + "','" + result + "','" + TotalID + "')";
                             AccessHelper.ExecuteNonQuery(tran, sSql, null);
                         }
                         tran.Commit();
@@ -339,7 +334,6 @@ namespace Cashier
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             textBox1.Focus();
-            Cashier_Main.itis = checkBox3.Checked;
         }
 
 

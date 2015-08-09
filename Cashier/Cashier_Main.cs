@@ -10,10 +10,8 @@ using System.Windows.Forms;
 
 namespace Cashier
 {
-
     public partial class Cashier_Main : Form
     {
-        public static bool itis = false;
         public Cashier_Main()
         {
             InitializeComponent();
@@ -42,12 +40,12 @@ namespace Cashier
 
         private void 登记商家ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            RegisterBusiness registerBusiness = new RegisterBusiness();
-            registerBusiness.ShowDialog();
-            registerBusiness.Close();
-            registerBusiness.Dispose();
-
+           
+                RegisterBusiness registerBusiness = new RegisterBusiness();
+                registerBusiness.ShowDialog();
+                registerBusiness.Close();
+                registerBusiness.Dispose();
+              
         }
 
         private void 消费结算ToolStripMenuItem_Click(object sender, EventArgs e)
