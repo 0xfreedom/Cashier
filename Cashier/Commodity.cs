@@ -114,34 +114,18 @@ namespace Cashier
 
         private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            DialogResult drt = MessageBox.Show("真的要删除吗？", "删除确认", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            switch (drt)
+
+            if (MessageBox.Show("真的要删除吗？", "删除确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.OK)
             {
-                case DialogResult.Abort:
-                    break;
-                case DialogResult.Cancel:
-                    break;
-                case DialogResult.Ignore:
-                    break;
-                case DialogResult.No:
-                    break;
-                case DialogResult.None:
-                    break;
-                case DialogResult.OK:
-                    sSql = "delete from goods where UID='" + this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
-                    int nonNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
-                    if (nonNum == 0)
-                    {
-                        MessageBox.Show("删除失败！");
-                    }
-                    break;
-                case DialogResult.Retry:
-                    break;
-                case DialogResult.Yes:
-                    break;
-                default:
-                    break;
+                sSql = "delete from goods where UID='" + this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+                int nonNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+                if (nonNum == 0)
+                {
+                    MessageBox.Show("删除失败！");
+                }
+
             }
+
         }
 
 
