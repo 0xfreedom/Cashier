@@ -64,11 +64,11 @@ namespace Cashier
             //MessageBox.Show(comboBox2.SelectedIndex.ToString());
             if (comboBox2.SelectedIndex == 0)
             {
-                sSql = "select Total_ID,现金结算 from Bill";
+                sSql = "select UID,现金结算 from Total";
             }
             else if (comboBox2.SelectedIndex == 1)
             {
-                sSql = "select Total_ID,刷卡结算 from Bill";
+                sSql = "select UID,刷卡结算 from Total";
             }
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
@@ -116,7 +116,7 @@ namespace Cashier
                 DataGridViewRow row = dataGridView1.Rows[i];
                 try
                 {
-                    Price += Convert.ToDecimal(row.Cells[0].Value.ToString());
+                    Price += Convert.ToDecimal(row.Cells[1].Value.ToString());
                 }
                 catch (Exception)
                 {
