@@ -55,6 +55,7 @@ namespace Cashier
             try
             {
                 viewState = this.dataGridView1[0, 0].Value.ToString();
+                // MessageBox.Show(viewState);
             }
             catch (Exception)
             {
@@ -70,19 +71,20 @@ namespace Cashier
         {
             try
             {
-                textBox1.Text = "";
-                textBox1.Focus();
+
                 viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
                 sSql = "select UID,商品编号,商品名称 from goods where uid='" + viewState + "'";
                 DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
                 //dataGridView2.DataSource = dt;
+                 
                 int index = this.dataGridView2.Rows.Add();
                 //MessageBox.Show(dt.Rows[0]["商品编号"].ToString());
                 this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["UID"].ToString();
                 this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["商品编号"].ToString();
                 this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["商品名称"].ToString();
                 //this.dataGridView2.Rows[index].Cells["商品名称"].Value = dt.Rows[0]["商品名称"].ToString();
-
+                textBox1.Text = "";
+                textBox1.Focus();
             }
             catch (Exception)
             {
