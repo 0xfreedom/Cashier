@@ -91,7 +91,7 @@ namespace Cashier
 
             }
         }
-
+        #region 支付方式逻辑单元
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked == true && checkBox2.Checked == false)
@@ -204,7 +204,7 @@ namespace Cashier
 
             }
         }
-
+        #endregion
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             try
@@ -303,6 +303,7 @@ namespace Cashier
             UpDate();
         }
 
+        #region 时间定时器
         private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 4)
@@ -337,6 +338,7 @@ namespace Cashier
             }
             label3.Text = totalPrice.ToString();
         }
+        #endregion
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {

@@ -61,14 +61,15 @@ namespace Cashier
         {
             timer1.Enabled = false;
             timer2.Enabled = true;
+            label8.Text = "";
             //MessageBox.Show(comboBox2.SelectedIndex.ToString());
             if (comboBox2.SelectedIndex == 0)
             {
-                sSql = "select UID,现金结算 from Total";
+                sSql = "select UID,现金结算 from Total where 现金结算<>0";
             }
             else if (comboBox2.SelectedIndex == 1)
             {
-                sSql = "select UID,刷卡结算 from Total";
+                sSql = "select UID,刷卡结算 from Total where 刷卡结算<>0";
             }
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;

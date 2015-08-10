@@ -14,6 +14,7 @@ namespace Cashier
     public partial class Commodity : Form
     {
         string sSql = "";
+        string viewState = "";
         public Commodity()
         {
             InitializeComponent();
@@ -22,19 +23,10 @@ namespace Cashier
         private void Commodity_Load(object sender, EventArgs e)
         {
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, "select * from Business", null);
-            //if (dt.Rows.Count != 0)
-            //{
             comboBox1.DataSource = dt;
             comboBox1.DisplayMember = "商家名称";
             comboBox1.ValueMember = "UID";
             BinderGridView();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("先添加商家！");
-            //    return;
-            //}
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -80,9 +72,10 @@ namespace Cashier
             int resNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
             if (resNum > 0)
             {
+                textBox1.Focus();
                 textBox1.Text = "";
                 textBox2.Text = "";
-                //MessageBox.Show("保存成功");
+
             }
             //调用绑定GridView
             BinderGridView();
@@ -125,6 +118,31 @@ namespace Cashier
                 }
 
             }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定要删除此条记录吗？", "删除记录", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                sSql = "delete from goods where UID='" + viewState + "'";
+                int nonNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+                if (nonNum == 0)
+                {
+                    MessageBox.Show("删除失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            BinderGridView();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
+            }
+            catch (Exception)
+            { }
 
         }
 

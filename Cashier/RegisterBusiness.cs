@@ -12,6 +12,7 @@ namespace Cashier
 {
     public partial class RegisterBusiness : Form
     {
+        string viewState = "";
         string sSql = "";
         public RegisterBusiness()
         {
@@ -53,25 +54,32 @@ namespace Cashier
 
         }
 
-        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (MessageBox.Show("真的要删除吗？", "删除确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.OK)
+            try
             {
-                sSql = "delete from Business where UID='" + this.dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+                viewState = this.dataGridView1[0, e.RowIndex].Value.ToString();
+            }
+            catch (Exception)
+            { }
 
+        }
+
+        private void deleteRow_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定要删除此条记录吗？", "删除记录", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                sSql = "delete from Business where UID='" + viewState + "'";
                 int nonNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
-
-                if (nonNum == 0)
+                sSql = "delete from Goods where Business_ID='" + viewState + "'";
+                int nonNum1 = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+                if (nonNum1 == 0 && nonNum == 0)
                 {
-                    MessageBox.Show("删除失败！");
+                    MessageBox.Show("删除失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
-            {
-                BinderGridView();
-            }
-
-
+            BinderGridView();
         }
 
 

@@ -21,25 +21,7 @@ namespace Cashier
 
         private void Bill_Load(object sender, EventArgs e)
         {
-            sSql = "select COUNT(*) from Total";
-            label1.Text = "共：" + AccessHelper.ExecuteScalar(AccessHelper.conn, sSql, null).ToString() + " 笔";
-            try
-            {
-                viewState = this.dataGridView1[0, 0].Value.ToString();
-            }
-            catch (Exception)
-            {
-
-            }
-
-            sSql = "select UID,总金额,createDate as 记录日期 from Total";
-            DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-             
-
+            BinderGridView();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -67,13 +49,50 @@ namespace Cashier
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            sSql = "select UID,总金额,createDate as 记录日期 from Total where UID like '%" + textBox1.Text.Trim()+ "%'";
+            sSql = "select UID,总金额,createDate as 记录日期 from Total where UID like '%" + textBox1.Text.Trim() + "%'";
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            
+
+        }
+
+        private void deleteRow_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定要删除此条记录吗？", "删除记录", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                sSql = "delete from Bill where Total_ID = '" + viewState + "'";
+                int nonNum = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+                sSql = "delete from Total where UID = '" + viewState + "'";
+                int nonNum1 = AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
+                if (nonNum1 == 0 && nonNum == 0)
+                {
+                    MessageBox.Show("删除失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            BinderGridView();
+        }
+
+        private void BinderGridView()
+        {
+            sSql = "select COUNT(*) from Total";
+            label1.Text = "共：" + AccessHelper.ExecuteScalar(AccessHelper.conn, sSql, null).ToString() + " 笔";
+            try
+            {
+                viewState = this.dataGridView1[0, 0].Value.ToString();
+            }
+            catch (Exception)
+            {
+
+            }
+
+            sSql = "select UID,总金额,createDate as 记录日期 from Total";
+            DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
+            dataGridView1.DataSource = dt;
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
 

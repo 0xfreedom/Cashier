@@ -34,6 +34,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.deleteRow = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -47,14 +48,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(58, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(668, 194);
+            this.groupBox1.Size = new System.Drawing.Size(668, 142);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "商家录入";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(297, 158);
+            this.button1.Location = new System.Drawing.Point(297, 113);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -80,17 +81,29 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.deleteRow);
             this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(58, 212);
+            this.groupBox2.Location = new System.Drawing.Point(58, 160);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(668, 338);
+            this.groupBox2.Size = new System.Drawing.Size(668, 369);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "已保存数据列表";
             // 
+            // deleteRow
+            // 
+            this.deleteRow.Location = new System.Drawing.Point(297, 338);
+            this.deleteRow.Name = "deleteRow";
+            this.deleteRow.Size = new System.Drawing.Size(75, 23);
+            this.deleteRow.TabIndex = 3;
+            this.deleteRow.Text = "删除记录";
+            this.deleteRow.UseVisualStyleBackColor = true;
+            this.deleteRow.Click += new System.EventHandler(this.deleteRow_Click);
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(6, 20);
             this.dataGridView1.Name = "dataGridView1";
@@ -100,6 +113,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(656, 312);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // RegisterBusiness
             // 
@@ -132,5 +146,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button deleteRow;
     }
 }
