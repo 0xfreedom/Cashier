@@ -87,7 +87,7 @@ namespace Cashier
 
             }
 
-            sSql = "select UID,总金额,createDate as 记录日期 from Total";
+            sSql = "select UID,总金额,createDate as 记录日期 from Total order by createDate desc";
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;

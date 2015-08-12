@@ -26,6 +26,9 @@ namespace Cashier
             comboBox1.DisplayMember = "商家名称";
             comboBox1.ValueMember = "UID";
 
+
+
+
         }
         /// <summary>
         /// 按照商家查询
@@ -34,10 +37,36 @@ namespace Cashier
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            //MessageBox.Show(dateTimePicker1.Value.ToShortDateString());
             timer1.Enabled = true;
             timer2.Enabled = false;
             //comboBox1.SelectedValue.ToString();
-            sSql = "select 商品编号,商品名称,SUM(商品数量) as 商品数量,SUM(金额) as 金额 from Bill where goodsID in (select UID from Goods where Business_ID='" + comboBox1.SelectedValue.ToString() + "') group by 商品编号,商品名称 order by 商品编号";
+            if (checkBox1.Checked != true)
+            {
+
+                try
+                {
+                    sSql = "select 商品编号,商品名称,SUM(商品数量) as 商品数量,SUM(金额) as 金额 from Bill where goodsID in (select UID from Goods where Business_ID='" + comboBox1.SelectedValue.ToString() + "') group by 商品编号,商品名称 order by 商品编号";
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    sSql = "select 商品编号,商品名称,SUM(商品数量) as 商品数量,SUM(金额) as 金额 from Bill where goodsID in (select UID from Goods where Business_ID='" + comboBox1.SelectedValue.ToString() + "') and Total_ID in (select UID from Total where createDate=#" + dateTimePicker1.Value.ToShortDateString() + "#) group by 商品编号,商品名称 order by 商品编号";
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+
+            }
+
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
             //dataGridView1.Columns[0].Visible = false;
@@ -63,14 +92,29 @@ namespace Cashier
             timer2.Enabled = true;
             label8.Text = "";
             //MessageBox.Show(comboBox2.SelectedIndex.ToString());
-            if (comboBox2.SelectedIndex == 0)
+            if (checkBox1.Checked != true)
             {
-                sSql = "select UID,现金结算 from Total where 现金结算<>0";
+                if (comboBox2.SelectedIndex == 0)
+                {
+                    sSql = "select UID,现金结算 from Total where 现金结算<>0";
+                }
+                else if (comboBox2.SelectedIndex == 1)
+                {
+                    sSql = "select UID,刷卡结算 from Total where 刷卡结算<>0";
+                }
             }
-            else if (comboBox2.SelectedIndex == 1)
+            else
             {
-                sSql = "select UID,刷卡结算 from Total where 刷卡结算<>0";
+                if (comboBox2.SelectedIndex == 0)
+                {
+                    sSql = "select UID,现金结算 from Total where 现金结算<>0 and createDate=#" + dateTimePicker1.Value.ToShortDateString() + "#";
+                }
+                else if (comboBox2.SelectedIndex == 1)
+                {
+                    sSql = "select UID,刷卡结算 from Total where 刷卡结算<>0 and createDate=#" + dateTimePicker1.Value.ToShortDateString() + "#";
+                }
             }
+
             DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
             dataGridView1.DataSource = dt;
             for (int i = 0; i < dt.Columns.Count; i++)
@@ -80,12 +124,7 @@ namespace Cashier
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            sSql = "select * from Bill where goodsID in (select UID from goods where Business_ID='" + comboBox1.SelectedValue.ToString() + "') and 支付方式='" + comboBox2.SelectedItem.ToString() + "'";
-            DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
-            dataGridView1.DataSource = dt;
-        }
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {

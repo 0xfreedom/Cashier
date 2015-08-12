@@ -73,5 +73,13 @@ namespace Cashier
             statisticsFrom.Close();
             statisticsFrom.Dispose();
         }
+
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
+            aboutForm.Close();
+            aboutForm.Dispose();
+        }
     }
 }
