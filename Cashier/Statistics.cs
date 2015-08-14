@@ -166,5 +166,19 @@ namespace Cashier
 
             }
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (checkBox1.Checked)
+            {
+                case true:
+                    dateTimePicker1.Enabled = true;
+                    break;
+                case false:
+                    dateTimePicker1.Enabled = false;
+                    break;
+            }
+
+        }
     }
 }
