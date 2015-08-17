@@ -35,7 +35,12 @@
             this.消费结算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.账务统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.统计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据备份ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据还原ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +52,7 @@
             this.消费结算ToolStripMenuItem,
             this.账务统计ToolStripMenuItem,
             this.统计ToolStripMenuItem,
+            this.数据管理ToolStripMenuItem,
             this.关于ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -89,12 +95,40 @@
             this.统计ToolStripMenuItem.Text = "统计";
             this.统计ToolStripMenuItem.Click += new System.EventHandler(this.统计ToolStripMenuItem_Click);
             // 
+            // 数据管理ToolStripMenuItem
+            // 
+            this.数据管理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.数据备份ToolStripMenuItem,
+            this.数据还原ToolStripMenuItem});
+            this.数据管理ToolStripMenuItem.Name = "数据管理ToolStripMenuItem";
+            this.数据管理ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.数据管理ToolStripMenuItem.Text = "数据管理";
+            // 
+            // 数据备份ToolStripMenuItem
+            // 
+            this.数据备份ToolStripMenuItem.Name = "数据备份ToolStripMenuItem";
+            this.数据备份ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.数据备份ToolStripMenuItem.Text = "数据备份";
+            this.数据备份ToolStripMenuItem.Click += new System.EventHandler(this.数据备份ToolStripMenuItem_Click);
+            // 
+            // 数据还原ToolStripMenuItem
+            // 
+            this.数据还原ToolStripMenuItem.Name = "数据还原ToolStripMenuItem";
+            this.数据还原ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.数据还原ToolStripMenuItem.Text = "数据还原";
+            this.数据还原ToolStripMenuItem.Click += new System.EventHandler(this.数据还原ToolStripMenuItem_Click);
+            // 
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
             this.关于ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.关于ToolStripMenuItem.Text = "关于";
             this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // Cashier_Main
             // 
@@ -128,6 +162,11 @@
         private System.Windows.Forms.ToolStripMenuItem 商品录入ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 登记商家ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据管理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据备份ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据还原ToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
