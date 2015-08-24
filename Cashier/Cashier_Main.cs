@@ -15,6 +15,7 @@ namespace Cashier
     public partial class Cashier_Main : Form
     {
         public static bool itis = false;
+        public static decimal moneySum = 0;
         public Cashier_Main()
         {
             InitializeComponent();
@@ -90,7 +91,7 @@ namespace Cashier
             {
 
 
-                saveFileDialog1.FileName = "db.mdb"; 
+                saveFileDialog1.FileName = "db.mdb";
                 saveFileDialog1.Filter = "(*.mdb)|*.mdb";
                 saveFileDialog1.DefaultExt = "*.mdb";
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
