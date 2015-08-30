@@ -76,7 +76,7 @@ namespace Cashier
                 sSql = "select UID,商品编号,商品名称 from goods where uid='" + viewState + "'";
                 DataTable dt = AccessHelper.ExecuteDataTable(AccessHelper.conn, sSql, null);
                 //dataGridView2.DataSource = dt;
-
+                 
                 int index = this.dataGridView2.Rows.Add();
                 //MessageBox.Show(dt.Rows[0]["商品编号"].ToString());
                 this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["UID"].ToString();
@@ -252,20 +252,15 @@ namespace Cashier
             textBox3.SelectAll();
         }
 
-        private void inertTotal()
+        private void UpDate()
         {
             TotalID = Guid.NewGuid().ToString();
             //先向Total合计表里插入此次账单 
             //MessageBox.Show(DateTime.Now.ToShortDateString());
-            sSql = "insert into Total (UID,现金结算,刷卡结算,总金额,createDate) values ('" + TotalID + "','" + textBox2.Text.Trim() + "','" + Convert.ToDecimal(textBox4.Text.Trim()) + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now.ToShortDateString() + "')";
+            sSql = "insert into Total (UID,现金结算,刷卡结算,总金额,createDate) values ('" + TotalID + "','" + textBox2.Text.Trim() + "','" + textBox3.Text.Trim() + "','" + Convert.ToDecimal(label3.Text) + "','" + DateTime.Now.ToShortDateString() + "')";
             AccessHelper.ExecuteNonQuery(AccessHelper.conn, sSql, null);
 
 
-
-        }
-
-        private void inertBill()
-        {
             using (OleDbConnection con = new OleDbConnection(AccessHelper.conn))
             {
                 con.Open();
@@ -305,7 +300,7 @@ namespace Cashier
 
         private void button1_Click(object sender, EventArgs e)
         {
-            inertTotal();
+            UpDate();
         }
 
         #region 时间定时器
@@ -351,9 +346,7 @@ namespace Cashier
             Cashier_Main.itis = checkBox3.Checked;
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            inertBill();
-        }
+
+
     }
 }
