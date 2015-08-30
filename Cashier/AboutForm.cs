@@ -15,14 +15,5 @@ namespace Cashier
         {
             InitializeComponent();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SqlQuery sq = new SqlQuery();
-            sq.ShowDialog();
-            sq.Close();
-            sq.Dispose();
-
-        }
     }
 }
